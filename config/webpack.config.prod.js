@@ -55,6 +55,7 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessModuleRegex = /\.module\.(less)$/;
 
 // common function to get style loaders
 const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -388,6 +389,11 @@ module.exports = {
             // Remove this when webpack adds a warning or an error for this.
             // See https://github.com/webpack/webpack/issues/6571
             sideEffects: true,
+          },
+          {
+            test: lessRegex,
+            exclude: lessModuleRegex,
+            use: getStyleLoaders({ importLoaders: 2 }, 'less-loader'),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
